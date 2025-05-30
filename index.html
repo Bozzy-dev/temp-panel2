@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Console Spoofer v1.0</title>
+    <title>Spoofing Control Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Consolas', 'Monaco', monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
@@ -20,14 +20,14 @@
             --accent-blue: #00a8cc;
             --light-gray: #ccd6f6;
             --dark-gray: #8892b0;
-            --card-bg: rgba(17, 34, 64, 0.35);
-            --panel-bg: rgba(10, 25, 47, 0.25);
-            --toggle-bg: rgba(17, 34, 64, 0.4);
+            --card-bg: rgba(17, 34, 64, 0.4);
+            --panel-bg: rgba(10, 25, 47, 0.3);
+            --toggle-bg: rgba(17, 34, 64, 0.5);
         }
 
         body {
             background: linear-gradient(135deg, #0c0e2b, #0a192f, #0c2d4d);
-            color: var(--accent-cyan);
+            color: var(--light-gray);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -36,9 +36,6 @@
             background-attachment: fixed;
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            overflow: hidden;
-            font-size: 14px;
-            line-height: 1.4;
         }
 
         @keyframes gradientBG {
@@ -47,117 +44,91 @@
             100% { background-position: 0% 50%; }
         }
 
-        .console-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 650px;
-            z-index: 10;
+        .panel {
             background: var(--panel-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            padding: 30px;
             border: 1px solid rgba(100, 255, 218, 0.15);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 600px;
         }
 
-        .console-header {
-            padding: 15px 20px;
-            background: rgba(10, 25, 47, 0.4);
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .panel-header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .console-title {
+        .panel-header h1 {
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 2rem;
             background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            margin-bottom: 10px;
         }
 
-        .console-version {
-            color: var(--accent-blue);
-            font-size: 0.9rem;
-        }
-
-        .console-body {
-            padding: 20px;
-        }
-
-        .console-instructions {
-            margin-bottom: 25px;
-            padding: 12px;
-            background: var(--card-bg);
-            border-radius: 6px;
-            border-left: 3px solid var(--accent-cyan);
-            font-size: 0.9rem;
-        }
-
-        .instruction-item {
-            display: flex;
-            margin-bottom: 6px;
-        }
-
-        .instruction-key {
-            min-width: 120px;
-            color: var(--accent-blue);
-            font-weight: bold;
+        .panel-header p {
+            color: var(--dark-gray);
+            font-size: 1rem;
         }
 
         .seed-info {
             display: flex;
             justify-content: space-between;
             background: var(--card-bg);
-            padding: 10px 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
             align-items: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 255, 218, 0.1);
         }
 
         .seed-label {
             color: var(--accent-blue);
+            font-weight: 500;
         }
 
         .seed-value {
             color: var(--accent-cyan);
             font-weight: bold;
             letter-spacing: 1px;
+            font-family: 'Consolas', monospace;
         }
 
         .spoof-options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
         .spoof-item {
             display: flex;
             align-items: center;
-            padding: 8px 12px;
-            border-radius: 4px;
-            background: rgba(17, 34, 64, 0.3);
-            transition: all 0.2s ease;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: var(--toggle-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .spoof-item:hover {
-            background: rgba(100, 255, 218, 0.1);
-        }
-
-        .spoof-item.selected {
-            background: rgba(100, 255, 218, 0.15);
-            border-left: 3px solid var(--accent-cyan);
+            border-color: rgba(100, 255, 218, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .spoof-checkbox {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 2px solid var(--accent-cyan);
-            border-radius: 3px;
+            border-radius: 4px;
             margin-right: 15px;
             display: flex;
             align-items: center;
@@ -165,59 +136,80 @@
             color: var(--primary-dark);
             font-size: 12px;
             flex-shrink: 0;
+            transition: all 0.2s ease;
         }
 
         .spoof-checkbox.checked {
             background: var(--accent-cyan);
         }
 
+        .spoof-checkbox.checked::before {
+            content: "✓";
+        }
+
         .spoof-label {
             flex-grow: 1;
+            font-size: 1.05rem;
         }
 
         .spoof-tag {
             background: rgba(0, 168, 204, 0.2);
             color: var(--accent-blue);
             font-size: 0.8rem;
-            padding: 2px 8px;
+            padding: 4px 10px;
             border-radius: 10px;
             margin-left: 10px;
         }
 
-        .action-bar {
+        .action-buttons {
             display: flex;
             justify-content: space-between;
-            padding: 15px 0;
-            border-top: 1px solid rgba(100, 255, 218, 0.1);
-            margin-top: 5px;
+            gap: 15px;
         }
 
-        .action-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            background: rgba(17, 34, 64, 0.3);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .action-item:hover {
-            background: rgba(100, 255, 218, 0.1);
-        }
-
-        .action-key {
+        .action-button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
             background: rgba(100, 255, 218, 0.1);
             color: var(--accent-cyan);
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-weight: bold;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .action-button:hover {
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.1);
+        }
+
+        .action-button:active {
+            transform: translateY(0);
+        }
+
+        .action-button i {
+            font-size: 1.1rem;
+        }
+
+        .panel-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--dark-gray);
+            font-size: 0.85rem;
         }
 
         /* Decorations */
-        .console-decoration {
-            position: absolute;
+        .bg-bubbles {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -226,318 +218,173 @@
             overflow: hidden;
         }
 
-        .console-decoration span {
+        .bg-bubbles li {
             position: absolute;
+            list-style: none;
             display: block;
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: 40px;
             background: rgba(100, 255, 218, 0.05);
+            bottom: -160px;
+            animation: square 25s infinite;
+            border-radius: 50%;
+            transition-timing-function: linear;
             border: 1px solid rgba(100, 255, 218, 0.1);
-            animation: animate 25s linear infinite;
-            bottom: -150px;
         }
 
-        .console-decoration span:nth-child(1) {
-            left: 25%;
-            width: 80px;
-            height: 80px;
-            animation-delay: 0s;
-        }
-
-        .console-decoration span:nth-child(2) {
-            left: 10%;
-            width: 20px;
-            height: 20px;
-            animation-delay: 2s;
-            animation-duration: 12s;
-        }
-
-        .console-decoration span:nth-child(3) {
-            left: 70%;
-            width: 20px;
-            height: 20px;
-            animation-delay: 4s;
-        }
-
-        .console-decoration span:nth-child(4) {
-            left: 40%;
-            width: 60px;
-            height: 60px;
-            animation-delay: 0s;
-            animation-duration: 18s;
-        }
-
-        .console-decoration span:nth-child(5) {
-            left: 65%;
-            width: 20px;
-            height: 20px;
-            animation-delay: 0s;
-        }
-
-        .console-decoration span:nth-child(6) {
-            left: 75%;
-            width: 110px;
-            height: 110px;
-            animation-delay: 3s;
-        }
-
-        .console-decoration span:nth-child(7) {
-            left: 35%;
-            width: 150px;
-            height: 150px;
-            animation-delay: 7s;
-        }
-
-        .console-decoration span:nth-child(8) {
-            left: 50%;
-            width: 25px;
-            height: 25px;
-            animation-delay: 15s;
-            animation-duration: 45s;
-        }
-
-        @keyframes animate {
+        @keyframes square {
             0% {
                 transform: translateY(0) rotate(0deg);
-                opacity: 0.7;
-                border-radius: 0;
+                opacity: 0.5;
+                border-radius: 50%;
             }
             100% {
                 transform: translateY(-1000px) rotate(720deg);
                 opacity: 0;
-                border-radius: 50%;
+                border-radius: 20%;
             }
-        }
-
-        /* Footer */
-        .console-footer {
-            padding: 12px 20px;
-            background: rgba(10, 25, 47, 0.4);
-            border-top: 1px solid rgba(100, 255, 218, 0.1);
-            text-align: center;
-            color: var(--accent-blue);
-            font-size: 0.85rem;
         }
 
         /* Responsive */
-        @media (max-width: 700px) {
-            body {
-                padding: 10px;
-                font-size: 13px;
+        @media (max-width: 600px) {
+            .panel {
+                padding: 20px;
             }
             
-            .console-container {
-                max-width: 100%;
-            }
-            
-            .console-body {
-                padding: 15px;
-            }
-            
-            .instruction-key {
-                min-width: 100px;
+            .panel-header h1 {
+                font-size: 1.6rem;
             }
             
             .spoof-item {
-                padding: 6px 10px;
+                padding: 12px 15px;
             }
             
-            .spoof-checkbox {
-                margin-right: 10px;
+            .action-buttons {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Decorations -->
-    <div class="console-decoration">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+    <!-- Background Decorations -->
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
     
-    <div class="console-container">
-        <!-- Header -->
-        <div class="console-header">
-            <div class="console-title">SYSTEM SPOOFER CONSOLE</div>
-            <div class="console-version">v1.0</div>
+    <div class="panel">
+        <div class="panel-header">
+            <h1>Spoofing Control Panel</h1>
+            <p>Toggle system spoofing features with one click</p>
         </div>
         
-        <!-- Body -->
-        <div class="console-body">
-            <div class="console-instructions">
-                <div class="instruction-item">
-                    <div class="instruction-key">Arrows / W A S D:</div>
-                    <div>Navigate options</div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-key">Enter:</div>
-                    <div>Select option</div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-key">F1:</div>
-                    <div>Generate new seed</div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-key">F2:</div>
-                    <div>Load selected options</div>
-                </div>
+        <div class="seed-info">
+            <div class="seed-label">Current Seed:</div>
+            <div class="seed-value" id="current-seed">8644627515970950</div>
+        </div>
+        
+        <div class="spoof-options">
+            <div class="spoof-item" data-option="disk">
+                <div class="spoof-checkbox"></div>
+                <div class="spoof-label">Disk Spoofing</div>
             </div>
-            
-            <div class="seed-info">
-                <div class="seed-label">Current Seed:</div>
-                <div class="seed-value">8644627515970950</div>
+            <div class="spoof-item" data-option="smbios">
+                <div class="spoof-checkbox"></div>
+                <div class="spoof-label">SMBIOS Spoofing</div>
             </div>
-            
-            <div class="spoof-options">
-                <div class="spoof-item" data-option="disk">
-                    <div class="spoof-checkbox"></div>
-                    <div class="spoof-label">Disk Spoofing</div>
-                </div>
-                <div class="spoof-item" data-option="smbios">
-                    <div class="spoof-checkbox"></div>
-                    <div class="spoof-label">SMBIOS Spoofing</div>
-                </div>
-                <div class="spoof-item" data-option="network">
-                    <div class="spoof-checkbox checked"></div>
-                    <div class="spoof-label">Network Spoofing</div>
-                    <div class="spoof-tag">Ethernet Only</div>
-                </div>
-                <div class="spoof-item" data-option="uefi">
-                    <div class="spoof-checkbox"></div>
-                    <div class="spoof-label">UEFI Spoofing</div>
-                </div>
-                <div class="spoof-item" data-option="usb">
-                    <div class="spoof-checkbox checked"></div>
-                    <div class="spoof-label">USB Spoofing</div>
-                </div>
-                <div class="spoof-item" data-option="gpu">
-                    <div class="spoof-checkbox"></div>
-                    <div class="spoof-label">GPU Spoofing</div>
-                    <div class="spoof-tag">NVIDIA ONLY</div>
-                </div>
-                <div class="spoof-item" data-option="monitor">
-                    <div class="spoof-checkbox"></div>
-                    <div class="spoof-label">Monitor Spoofing</div>
-                </div>
+            <div class="spoof-item" data-option="network">
+                <div class="spoof-checkbox checked"></div>
+                <div class="spoof-label">Network Spoofing</div>
+                <div class="spoof-tag">Ethernet Only</div>
             </div>
-            
-            <div class="action-bar">
-                <div class="action-item" id="generate-seed">
-                    <div class="action-key">F1</div>
-                    <div>Generate New Seed</div>
-                </div>
-                <div class="action-item" id="load-spoofer">
-                    <div class="action-key">F2</div>
-                    <div>Load The Spoofer</div>
-                </div>
+            <div class="spoof-item" data-option="uefi">
+                <div class="spoof-checkbox"></div>
+                <div class="spoof-label">UEFI Spoofing</div>
+            </div>
+            <div class="spoof-item" data-option="usb">
+                <div class="spoof-checkbox checked"></div>
+                <div class="spoof-label">USB Spoofing</div>
+            </div>
+            <div class="spoof-item" data-option="gpu">
+                <div class="spoof-checkbox"></div>
+                <div class="spoof-label">GPU Spoofing</div>
+                <div class="spoof-tag">NVIDIA ONLY</div>
+            </div>
+            <div class="spoof-item" data-option="monitor">
+                <div class="spoof-checkbox"></div>
+                <div class="spoof-label">Monitor Spoofing</div>
             </div>
         </div>
         
-        <!-- Footer -->
-        <div class="console-footer">
-            &copy; 2023 System Spoofer Console v1.0 | Professional Security Tool
+        <div class="action-buttons">
+            <button class="action-button" id="generate-seed">
+                <i class="fas fa-redo"></i>
+                Generate New Seed
+            </button>
+            <button class="action-button" id="load-spoofer">
+                <i class="fas fa-rocket"></i>
+                Load The Spoofer
+            </button>
+        </div>
+        
+        <div class="panel-footer">
+            System Spoofer v1.0 | Professional Security Tool
         </div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const options = document.querySelectorAll('.spoof-item');
-            let selectedIndex = 0;
-            
-            // Function to update selection
-            function updateSelection() {
-                options.forEach((item, index) => {
-                    item.classList.toggle('selected', index === selectedIndex);
-                });
-            }
-            
-            // Initial selection
-            updateSelection();
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                // Navigation with arrow keys or WASD
-                if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
-                    selectedIndex = (selectedIndex + 1) % options.length;
-                    updateSelection();
-                    e.preventDefault();
-                } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
-                    selectedIndex = (selectedIndex - 1 + options.length) % options.length;
-                    updateSelection();
-                    e.preventDefault();
-                }
-                
-                // Toggle selection with Enter
-                if (e.key === 'Enter') {
-                    const checkbox = options[selectedIndex].querySelector('.spoof-checkbox');
-                    checkbox.classList.toggle('checked');
-                    e.preventDefault();
-                }
-                
-                // F1 - Generate new seed
-                if (e.key === 'F1') {
-                    generateNewSeed();
-                    e.preventDefault();
-                }
-                
-                // F2 - Load spoofer
-                if (e.key === 'F2') {
-                    loadSpoofer();
-                    e.preventDefault();
-                }
-            });
-            
-            // Click to select
-            options.forEach((item, index) => {
+            // Toggle spoof options on click
+            document.querySelectorAll('.spoof-item').forEach(item => {
                 item.addEventListener('click', function() {
-                    selectedIndex = index;
-                    updateSelection();
-                });
-                
-                // Toggle on double click
-                item.addEventListener('dblclick', function() {
                     const checkbox = this.querySelector('.spoof-checkbox');
                     checkbox.classList.toggle('checked');
+                    
+                    // Add visual feedback
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 5px 15px rgba(100, 255, 218, 0.2)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 200);
                 });
             });
             
-            // Generate new seed function
-            function generateNewSeed() {
-                const seedValue = document.querySelector('.seed-value');
+            // Generate new seed
+            document.getElementById('generate-seed').addEventListener('click', function() {
                 const newSeed = Math.floor(Math.random() * 10000000000000000).toString().padStart(16, '0');
-                seedValue.textContent = newSeed;
+                document.getElementById('current-seed').textContent = newSeed;
                 
                 // Visual feedback
-                seedValue.style.color = '#ff5555';
-                setTimeout(() => {
-                    seedValue.style.color = 'var(--accent-cyan)';
-                }, 300);
-            }
-            
-            // Load spoofer function
-            function loadSpoofer() {
-                const actionBtn = document.getElementById('load-spoofer');
-                actionBtn.textContent = 'Loading...';
-                actionBtn.style.color = 'var(--accent-cyan)';
+                this.innerHTML = '<i class="fas fa-check"></i> Seed Generated!';
+                this.style.background = 'rgba(100, 255, 218, 0.3)';
                 
                 setTimeout(() => {
-                    actionBtn.innerHTML = '<div class="action-key">F2</div> Spoofer Loaded!';
-                    setTimeout(() => {
-                        actionBtn.innerHTML = '<div class="action-key">F2</div> Load The Spoofer';
-                        actionBtn.style.color = '';
-                    }, 2000);
-                }, 1000);
-            }
+                    this.innerHTML = '<i class="fas fa-redo"></i> Generate New Seed';
+                    this.style.background = '';
+                }, 1500);
+            });
             
-            // Button event listeners
-            document.getElementById('generate-seed').addEventListener('click', generateNewSeed);
-            document.getElementById('load-spoofer').addEventListener('click', loadSpoofer);
+            // Load spoofer
+            document.getElementById('load-spoofer').addEventListener('click', function() {
+                // Visual feedback
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.style.background = 'rgba(0, 168, 204, 0.3)';
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i> Spoofer Loaded!';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-rocket"></i> Load The Spoofer';
+                        this.style.background = '';
+                    }, 1500);
+                }, 2000);
+            });
         });
     </script>
 </body>
