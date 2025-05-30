@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spoofing Control Panel</title>
+    <title>Cryptic HWID Spoofer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -23,6 +23,7 @@
             --card-bg: rgba(17, 34, 64, 0.4);
             --panel-bg: rgba(10, 25, 47, 0.3);
             --toggle-bg: rgba(17, 34, 64, 0.5);
+            --cryptic-purple: #9d4edd;
         }
 
         body {
@@ -49,7 +50,7 @@
             backdrop-filter: blur(12px);
             border-radius: 15px;
             padding: 30px;
-            border: 1px solid rgba(100, 255, 218, 0.15);
+            border: 1px solid rgba(157, 78, 221, 0.3);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             width: 100%;
             max-width: 600px;
@@ -58,16 +59,29 @@
         .panel-header {
             text-align: center;
             margin-bottom: 30px;
+            position: relative;
+        }
+
+        .brand-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--cryptic-purple);
+            font-size: 1.8rem;
         }
 
         .panel-header h1 {
             font-weight: 600;
             font-size: 2rem;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            background: linear-gradient(90deg, var(--cryptic-purple), var(--accent-blue));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .panel-header p {
@@ -84,12 +98,32 @@
             margin-bottom: 25px;
             align-items: center;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            position: relative;
+        }
+
+        .seed-icon {
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            background: var(--primary-dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cryptic-purple);
+            border: 1px solid var(--cryptic-purple);
+            font-size: 0.9rem;
         }
 
         .seed-label {
             color: var(--accent-blue);
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .seed-value {
@@ -116,18 +150,44 @@
             border: 1px solid rgba(100, 255, 218, 0.1);
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .spoof-item:hover {
-            border-color: rgba(100, 255, 218, 0.3);
+            border-color: var(--cryptic-purple);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.2);
+        }
+
+        .spoof-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--cryptic-purple);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .spoof-item:hover::before {
+            opacity: 1;
+        }
+
+        .option-icon {
+            margin-right: 15px;
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
         }
 
         .spoof-checkbox {
             width: 20px;
             height: 20px;
-            border: 2px solid var(--accent-cyan);
+            border: 2px solid var(--cryptic-purple);
             border-radius: 4px;
             margin-right: 15px;
             display: flex;
@@ -140,7 +200,7 @@
         }
 
         .spoof-checkbox.checked {
-            background: var(--accent-cyan);
+            background: var(--cryptic-purple);
         }
 
         .spoof-checkbox.checked::before {
@@ -153,12 +213,13 @@
         }
 
         .spoof-tag {
-            background: rgba(0, 168, 204, 0.2);
-            color: var(--accent-blue);
+            background: rgba(157, 78, 221, 0.2);
+            color: var(--cryptic-purple);
             font-size: 0.8rem;
             padding: 4px 10px;
             border-radius: 10px;
             margin-left: 10px;
+            font-weight: 500;
         }
 
         .action-buttons {
@@ -172,8 +233,8 @@
             padding: 12px;
             border-radius: 8px;
             border: none;
-            background: rgba(100, 255, 218, 0.1);
-            color: var(--accent-cyan);
+            background: rgba(157, 78, 221, 0.1);
+            color: var(--light-gray);
             font-weight: 500;
             font-size: 1rem;
             cursor: pointer;
@@ -183,21 +244,17 @@
             justify-content: center;
             gap: 8px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(100, 255, 218, 0.2);
+            border: 1px solid rgba(157, 78, 221, 0.3);
         }
 
         .action-button:hover {
-            background: rgba(100, 255, 218, 0.2);
+            background: rgba(157, 78, 221, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.1);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.2);
         }
 
         .action-button:active {
             transform: translateY(0);
-        }
-
-        .action-button i {
-            font-size: 1.1rem;
         }
 
         .panel-footer {
@@ -205,6 +262,14 @@
             margin-top: 25px;
             color: var(--dark-gray);
             font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .footer-icon {
+            color: var(--cryptic-purple);
         }
 
         /* Decorations */
@@ -224,12 +289,12 @@
             display: block;
             width: 40px;
             height: 40px;
-            background: rgba(100, 255, 218, 0.05);
+            background: rgba(157, 78, 221, 0.05);
             bottom: -160px;
             animation: square 25s infinite;
             border-radius: 50%;
             transition-timing-function: linear;
-            border: 1px solid rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(157, 78, 221, 0.1);
         }
 
         @keyframes square {
@@ -280,61 +345,95 @@
     
     <div class="panel">
         <div class="panel-header">
-            <h1>Spoofing Control Panel</h1>
-            <p>Toggle system spoofing features with one click</p>
+            <div class="brand-icon">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <h1>
+                <i class="fas fa-mask"></i>
+                Cryptic HWID Spoofer
+            </h1>
+            <p>Protect your digital identity with advanced spoofing technology</p>
         </div>
         
         <div class="seed-info">
-            <div class="seed-label">Current Seed:</div>
+            <div class="seed-icon">
+                <i class="fas fa-fingerprint"></i>
+            </div>
+            <div class="seed-label">
+                <i class="fas fa-key"></i>
+                Current Seed:
+            </div>
             <div class="seed-value" id="current-seed">8644627515970950</div>
         </div>
         
         <div class="spoof-options">
             <div class="spoof-item" data-option="disk">
                 <div class="spoof-checkbox"></div>
+                <div class="option-icon">
+                    <i class="fas fa-hdd"></i>
+                </div>
                 <div class="spoof-label">Disk Spoofing</div>
             </div>
             <div class="spoof-item" data-option="smbios">
                 <div class="spoof-checkbox"></div>
+                <div class="option-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
                 <div class="spoof-label">SMBIOS Spoofing</div>
             </div>
             <div class="spoof-item" data-option="network">
                 <div class="spoof-checkbox checked"></div>
+                <div class="option-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
                 <div class="spoof-label">Network Spoofing</div>
                 <div class="spoof-tag">Ethernet Only</div>
             </div>
             <div class="spoof-item" data-option="uefi">
                 <div class="spoof-checkbox"></div>
+                <div class="option-icon">
+                    <i class="fas fa-biohazard"></i>
+                </div>
                 <div class="spoof-label">UEFI Spoofing</div>
             </div>
             <div class="spoof-item" data-option="usb">
                 <div class="spoof-checkbox checked"></div>
+                <div class="option-icon">
+                    <i class="fas fa-usb"></i>
+                </div>
                 <div class="spoof-label">USB Spoofing</div>
             </div>
             <div class="spoof-item" data-option="gpu">
                 <div class="spoof-checkbox"></div>
+                <div class="option-icon">
+                    <i class="fas fa-video"></i>
+                </div>
                 <div class="spoof-label">GPU Spoofing</div>
                 <div class="spoof-tag">NVIDIA ONLY</div>
             </div>
             <div class="spoof-item" data-option="monitor">
                 <div class="spoof-checkbox"></div>
+                <div class="option-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
                 <div class="spoof-label">Monitor Spoofing</div>
             </div>
         </div>
         
         <div class="action-buttons">
             <button class="action-button" id="generate-seed">
-                <i class="fas fa-redo"></i>
+                <i class="fas fa-random"></i>
                 Generate New Seed
             </button>
             <button class="action-button" id="load-spoofer">
-                <i class="fas fa-rocket"></i>
-                Load The Spoofer
+                <i class="fas fa-shield-alt"></i>
+                Activate Spoofer
             </button>
         </div>
         
         <div class="panel-footer">
-            System Spoofer v1.0 | Professional Security Tool
+            <i class="fas fa-user-secret footer-icon"></i>
+            Cryptic HWID Spoofer v1.0 | Advanced Identity Protection
         </div>
     </div>
     
@@ -348,7 +447,7 @@
                     
                     // Add visual feedback
                     this.style.transform = 'translateY(-2px)';
-                    this.style.boxShadow = '0 5px 15px rgba(100, 255, 218, 0.2)';
+                    this.style.boxShadow = '0 5px 15px rgba(157, 78, 221, 0.3)';
                     setTimeout(() => {
                         this.style.transform = '';
                         this.style.boxShadow = '';
@@ -362,28 +461,50 @@
                 document.getElementById('current-seed').textContent = newSeed;
                 
                 // Visual feedback
-                this.innerHTML = '<i class="fas fa-check"></i> Seed Generated!';
-                this.style.background = 'rgba(100, 255, 218, 0.3)';
+                const btn = this;
+                btn.innerHTML = '<i class="fas fa-check"></i> Seed Generated!';
+                btn.style.background = 'rgba(157, 78, 221, 0.3)';
                 
                 setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-redo"></i> Generate New Seed';
-                    this.style.background = '';
+                    btn.innerHTML = '<i class="fas fa-random"></i> Generate New Seed';
+                    btn.style.background = '';
                 }, 1500);
+                
+                // Animate seed change
+                const seedElement = document.getElementById('current-seed');
+                seedElement.style.transform = 'scale(1.1)';
+                seedElement.style.color = 'var(--cryptic-purple)';
+                setTimeout(() => {
+                    seedElement.style.transform = '';
+                    seedElement.style.color = '';
+                }, 500);
             });
             
             // Load spoofer
             document.getElementById('load-spoofer').addEventListener('click', function() {
+                const btn = this;
+                
                 // Visual feedback
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-                this.style.background = 'rgba(0, 168, 204, 0.3)';
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Encrypting...';
+                btn.style.background = 'rgba(157, 78, 221, 0.3)';
                 
                 setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-check"></i> Spoofer Loaded!';
+                    btn.innerHTML = '<i class="fas fa-check"></i> Spoofer Active!';
+                    
+                    // Pulse animation for all checked items
+                    document.querySelectorAll('.spoof-checkbox.checked').forEach(cb => {
+                        const item = cb.closest('.spoof-item');
+                        item.style.boxShadow = '0 0 15px rgba(157, 78, 221, 0.5)';
+                        setTimeout(() => {
+                            item.style.boxShadow = '';
+                        }, 1000);
+                    });
+                    
                     setTimeout(() => {
-                        this.innerHTML = '<i class="fas fa-rocket"></i> Load The Spoofer';
-                        this.style.background = '';
-                    }, 1500);
-                }, 2000);
+                        btn.innerHTML = '<i class="fas fa-shield-alt"></i> Activate Spoofer';
+                        btn.style.background = '';
+                    }, 2000);
+                }, 1500);
             });
         });
     </script>
