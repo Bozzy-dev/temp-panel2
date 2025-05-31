@@ -25,6 +25,7 @@
             --toggle-bg: rgba(17, 34, 64, 0.5);
             --error-red: #ff5555;
             --sidebar-bg: rgba(10, 25, 47, 0.6);
+            --cryptic-purple: #9d4edd;
         }
 
         body {
@@ -58,6 +59,7 @@
             flex-direction: column;
             overflow: hidden;
             flex-shrink: 0;
+            transition: all 0.3s ease;
         }
 
         .brand-header {
@@ -68,7 +70,7 @@
 
         .brand-header h1 {
             font-weight: 600;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
             -webkit-background-clip: text;
             background-clip: text;
@@ -78,7 +80,7 @@
 
         .brand-header p {
             color: var(--dark-gray);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .tabs {
@@ -163,6 +165,12 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .panel-header {
