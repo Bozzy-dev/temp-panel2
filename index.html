@@ -48,41 +48,45 @@
             background: var(--panel-bg);
             backdrop-filter: blur(12px);
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             border: 1px solid rgba(100, 255, 218, 0.15);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             width: 100%;
             max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .panel-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             position: relative;
         }
 
         .panel-header h1 {
             font-weight: 600;
-            font-size: 2rem;
+            font-size: 1.8rem;
             background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .panel-header p {
             color: var(--dark-gray);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .seed-info {
             display: flex;
             justify-content: space-between;
             background: var(--card-bg);
-            padding: 15px;
+            padding: 12px 15px;
             border-radius: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             align-items: center;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(100, 255, 218, 0.1);
@@ -91,6 +95,7 @@
         .seed-label {
             color: var(--accent-blue);
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         .seed-value {
@@ -98,21 +103,25 @@
             font-weight: bold;
             letter-spacing: 1px;
             font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
         }
 
         .spoof-options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            padding: 5px;
+            flex: 1;
         }
 
         .spoof-item {
             display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            border-radius: 10px;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border-radius: 8px;
             background: var(--toggle-bg);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(100, 255, 218, 0.1);
@@ -127,27 +136,29 @@
         }
 
         .option-icon {
-            margin-right: 15px;
+            margin-right: 12px;
             color: var(--accent-blue);
-            font-size: 1.3rem;
-            width: 30px;
+            font-size: 1.2rem;
+            width: 24px;
             text-align: center;
             flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .spoof-checkbox {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid var(--accent-cyan);
             border-radius: 4px;
-            margin-right: 15px;
+            margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary-dark);
-            font-size: 12px;
+            font-size: 11px;
             flex-shrink: 0;
             transition: all 0.2s ease;
+            margin-top: 2px;
         }
 
         .spoof-checkbox.checked {
@@ -163,14 +174,14 @@
         }
 
         .spoof-label {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 500;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .spoof-desc {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--dark-gray);
             display: block;
             line-height: 1.4;
@@ -180,7 +191,7 @@
             background: rgba(0, 168, 204, 0.2);
             color: var(--accent-blue);
             font-size: 0.75rem;
-            padding: 3px 8px;
+            padding: 2px 8px;
             border-radius: 10px;
             margin-top: 4px;
             display: inline-block;
@@ -201,7 +212,7 @@
             background: rgba(100, 255, 218, 0.1);
             color: var(--accent-cyan);
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -224,9 +235,9 @@
 
         .panel-footer {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 15px;
             color: var(--dark-gray);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         /* Decorations */
@@ -284,27 +295,51 @@
             animation: pulse 1.5s;
         }
 
+        /* Scrollbar styling */
+        .spoof-options::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .spoof-options::-webkit-scrollbar-track {
+            background: rgba(10, 25, 47, 0.2);
+            border-radius: 10px;
+        }
+
+        .spoof-options::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 10px;
+        }
+
+        .spoof-options::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .panel {
                 padding: 20px;
+                max-height: 95vh;
             }
             
             .panel-header h1 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
             
             .spoof-item {
-                padding: 15px;
+                padding: 10px 12px;
             }
             
             .action-buttons {
                 flex-direction: column;
+                gap: 10px;
             }
             
-            .option-icon {
-                font-size: 1.1rem;
-                width: 25px;
+            .spoof-label {
+                font-size: 0.95rem;
+            }
+            
+            .spoof-desc {
+                font-size: 0.78rem;
             }
         }
     </style>
@@ -378,7 +413,7 @@
             <div class="spoof-item" data-option="usb">
                 <div class="spoof-checkbox checked"></div>
                 <div class="option-icon">
-                    <i class="fas fa-plug"></i>
+                    <i class="fas fa-usb"></i>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">USB Spoofing</span>
@@ -388,7 +423,7 @@
             <div class="spoof-item" data-option="gpu">
                 <div class="spoof-checkbox"></div>
                 <div class="option-icon">
-                    <i class="fas fa-cube"></i>
+                    <i class="fas fa-gamepad"></i>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">GPU Spoofing</span>
@@ -456,6 +491,9 @@
                 // Animation: flip effect
                 seedElement.style.animation = 'seedFlip 0.6s ease';
                 
+                // Button feedback
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+                
                 setTimeout(() => {
                     const newSeed = Math.floor(Math.random() * 10000000000000000).toString().padStart(16, '0');
                     seedElement.textContent = newSeed;
@@ -464,13 +502,12 @@
                     setTimeout(() => {
                         seedElement.style.animation = '';
                     }, 600);
+                    
+                    // Restore button text
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="fas fa-random"></i> Generate New Seed';
+                    }, 1500);
                 }, 300);
-                
-                // Button feedback
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fas fa-random"></i> Generate New Seed';
-                }, 1500);
             });
             
             // Load spoofer
