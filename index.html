@@ -23,6 +23,7 @@
             --card-bg: rgba(17, 34, 64, 0.4);
             --panel-bg: rgba(10, 25, 47, 0.3);
             --toggle-bg: rgba(17, 34, 64, 0.5);
+            --error-red: #ff5555;
         }
 
         body {
@@ -119,7 +120,7 @@
 
         .spoof-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             padding: 12px 15px;
             border-radius: 8px;
             background: var(--toggle-bg);
@@ -135,14 +136,10 @@
             box-shadow: 0 5px 15px rgba(100, 255, 218, 0.1);
         }
 
-        .option-icon {
+        .control-group {
+            display: flex;
+            align-items: center;
             margin-right: 12px;
-            color: var(--accent-blue);
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-            flex-shrink: 0;
-            margin-top: 2px;
         }
 
         .spoof-checkbox {
@@ -150,7 +147,6 @@
             height: 18px;
             border: 2px solid var(--accent-cyan);
             border-radius: 4px;
-            margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -158,7 +154,6 @@
             font-size: 11px;
             flex-shrink: 0;
             transition: all 0.2s ease;
-            margin-top: 2px;
         }
 
         .spoof-checkbox.checked {
@@ -167,6 +162,15 @@
 
         .spoof-checkbox.checked::before {
             content: "✓";
+        }
+
+        .option-icon {
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-left: 12px;
         }
 
         .spoof-text {
@@ -285,6 +289,11 @@
             100% { transform: rotateX(0); opacity: 1; }
         }
 
+        @keyframes fadeRed {
+            0% { color: var(--accent-cyan); }
+            100% { color: var(--error-red); }
+        }
+
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(100, 255, 218, 0); }
@@ -370,9 +379,11 @@
         
         <div class="spoof-options">
             <div class="spoof-item" data-option="disk">
-                <div class="spoof-checkbox"></div>
-                <div class="option-icon">
-                    <i class="fas fa-hdd"></i>
+                <div class="control-group">
+                    <div class="spoof-checkbox"></div>
+                    <div class="option-icon">
+                        <i class="fas fa-hdd"></i>
+                    </div>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">Disk Spoofing</span>
@@ -380,9 +391,11 @@
                 </div>
             </div>
             <div class="spoof-item" data-option="smbios">
-                <div class="spoof-checkbox"></div>
-                <div class="option-icon">
-                    <i class="fas fa-microchip"></i>
+                <div class="control-group">
+                    <div class="spoof-checkbox"></div>
+                    <div class="option-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">SMBIOS Spoofing</span>
@@ -390,9 +403,11 @@
                 </div>
             </div>
             <div class="spoof-item" data-option="network">
-                <div class="spoof-checkbox checked"></div>
-                <div class="option-icon">
-                    <i class="fas fa-network-wired"></i>
+                <div class="control-group">
+                    <div class="spoof-checkbox checked"></div>
+                    <div class="option-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">Network Spoofing</span>
@@ -401,9 +416,11 @@
                 </div>
             </div>
             <div class="spoof-item" data-option="uefi">
-                <div class="spoof-checkbox"></div>
-                <div class="option-icon">
-                    <i class="fas fa-microchip"></i>
+                <div class="control-group">
+                    <div class="spoof-checkbox"></div>
+                    <div class="option-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">UEFI Spoofing</span>
@@ -411,9 +428,11 @@
                 </div>
             </div>
             <div class="spoof-item" data-option="usb">
-                <div class="spoof-checkbox checked"></div>
-                <div class="option-icon">
-                    <i class="fas fa-usb"></i>
+                <div class="control-group">
+                    <div class="spoof-checkbox checked"></div>
+                    <div class="option-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">USB Spoofing</span>
@@ -421,9 +440,11 @@
                 </div>
             </div>
             <div class="spoof-item" data-option="gpu">
-                <div class="spoof-checkbox"></div>
-                <div class="option-icon">
-                    <i class="fas fa-gamepad"></i>
+                <div class="control-group">
+                    <div class="spoof-checkbox"></div>
+                    <div class="option-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">GPU Spoofing</span>
@@ -432,9 +453,11 @@
                 </div>
             </div>
             <div class="spoof-item" data-option="monitor">
-                <div class="spoof-checkbox"></div>
-                <div class="option-icon">
-                    <i class="fas fa-desktop"></i>
+                <div class="control-group">
+                    <div class="spoof-checkbox"></div>
+                    <div class="option-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
                 </div>
                 <div class="spoof-text">
                     <span class="spoof-label">Monitor Spoofing</span>
@@ -481,6 +504,7 @@
             document.getElementById('generate-seed').addEventListener('click', function() {
                 const btn = this;
                 const seedElement = document.getElementById('current-seed');
+                const currentSeed = seedElement.textContent;
                 
                 // Animation: pulse effect
                 btn.classList.add('pulse');
@@ -488,25 +512,30 @@
                     btn.classList.remove('pulse');
                 }, 1500);
                 
-                // Animation: flip effect
-                seedElement.style.animation = 'seedFlip 0.6s ease';
-                
                 // Button feedback
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
                 
+                // Step 1: Fade to red
+                seedElement.style.animation = 'fadeRed 0.3s forwards';
+                
                 setTimeout(() => {
-                    const newSeed = Math.floor(Math.random() * 10000000000000000).toString().padStart(16, '0');
-                    seedElement.textContent = newSeed;
+                    // Step 2: Flip animation
+                    seedElement.style.animation = 'seedFlip 0.6s ease';
                     
-                    // Remove animation after completion
                     setTimeout(() => {
+                        // Generate new seed
+                        const newSeed = Math.floor(Math.random() * 10000000000000000).toString().padStart(16, '0');
+                        seedElement.textContent = newSeed;
+                        
+                        // Reset to normal color
                         seedElement.style.animation = '';
-                    }, 600);
-                    
-                    // Restore button text
-                    setTimeout(() => {
-                        btn.innerHTML = '<i class="fas fa-random"></i> Generate New Seed';
-                    }, 1500);
+                        seedElement.style.color = 'var(--accent-cyan)';
+                        
+                        // Restore button text
+                        setTimeout(() => {
+                            btn.innerHTML = '<i class="fas fa-random"></i> Generate New Seed';
+                        }, 300);
+                    }, 300);
                 }, 300);
             });
             
