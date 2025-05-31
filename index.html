@@ -24,6 +24,7 @@
             --panel-bg: rgba(10, 25, 47, 0.3);
             --toggle-bg: rgba(17, 34, 64, 0.5);
             --error-red: #ff5555;
+            --sidebar-bg: rgba(10, 25, 47, 0.6);
         }
 
         body {
@@ -31,12 +32,11 @@
             color: var(--light-gray);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
             background-attachment: fixed;
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            overflow: hidden;
         }
 
         @keyframes gradientBG {
@@ -45,7 +45,113 @@
             100% { background-position: 0% 50%; }
         }
 
-        .panel {
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-right: 20px;
+            border: 1px solid rgba(100, 255, 218, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .brand-header {
+            padding: 25px 20px 15px;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+            text-align: center;
+        }
+
+        .brand-header h1 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .brand-header p {
+            color: var(--dark-gray);
+            font-size: 0.85rem;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            flex: 1;
+        }
+
+        .tab-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            position: relative;
+        }
+
+        .tab-item i {
+            width: 25px;
+            font-size: 1.1rem;
+            margin-right: 12px;
+            color: var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .tab-item:hover {
+            background: rgba(100, 255, 218, 0.05);
+            color: var(--accent-cyan);
+        }
+
+        .tab-item:hover i {
+            color: var(--accent-cyan);
+        }
+
+        .tab-item.active {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent-cyan);
+        }
+
+        .tab-item.active i {
+            color: var(--accent-cyan);
+        }
+
+        .tab-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--accent-cyan);
+        }
+
+        .sidebar-footer {
+            padding: 15px;
+            text-align: center;
+            color: var(--dark-gray);
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-height: 95vh;
+        }
+
+        .content-panel {
             background: var(--panel-bg);
             backdrop-filter: blur(12px);
             border-radius: 15px;
@@ -53,8 +159,7 @@
             border: 1px solid rgba(100, 255, 218, 0.15);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
+            flex: 1;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -66,7 +171,7 @@
             position: relative;
         }
 
-        .panel-header h1 {
+        .panel-header h2 {
             font-weight: 600;
             font-size: 1.8rem;
             background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
@@ -81,6 +186,7 @@
             font-size: 0.95rem;
         }
 
+        /* Spoof Panel Styles */
         .seed-info {
             display: flex;
             justify-content: space-between;
@@ -237,11 +343,63 @@
             transform: translateY(0);
         }
 
-        .panel-footer {
-            text-align: center;
-            margin-top: 15px;
-            color: var(--dark-gray);
-            font-size: 0.8rem;
+        /* Serial Checker Styles */
+        .serial-checker {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .hardware-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--toggle-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .hardware-item:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.1);
+        }
+
+        .hardware-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(100, 255, 218, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .hardware-info {
+            flex: 1;
+        }
+
+        .hardware-name {
+            font-weight: 500;
+            font-size: 1.05rem;
+            color: var(--accent-cyan);
+            margin-bottom: 5px;
+        }
+
+        .hardware-serial {
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            word-break: break-all;
         }
 
         /* Decorations */
@@ -305,32 +463,65 @@
         }
 
         /* Scrollbar styling */
-        .spoof-options::-webkit-scrollbar {
+        .spoof-options::-webkit-scrollbar,
+        .serial-checker::-webkit-scrollbar {
             width: 6px;
         }
 
-        .spoof-options::-webkit-scrollbar-track {
+        .spoof-options::-webkit-scrollbar-track,
+        .serial-checker::-webkit-scrollbar-track {
             background: rgba(10, 25, 47, 0.2);
             border-radius: 10px;
         }
 
-        .spoof-options::-webkit-scrollbar-thumb {
+        .spoof-options::-webkit-scrollbar-thumb,
+        .serial-checker::-webkit-scrollbar-thumb {
             background: var(--accent-blue);
             border-radius: 10px;
         }
 
-        .spoof-options::-webkit-scrollbar-thumb:hover {
+        .spoof-options::-webkit-scrollbar-thumb:hover,
+        .serial-checker::-webkit-scrollbar-thumb:hover {
             background: var(--accent-cyan);
         }
 
         /* Responsive */
-        @media (max-width: 600px) {
-            .panel {
-                padding: 20px;
-                max-height: 95vh;
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
             }
             
-            .panel-header h1 {
+            .sidebar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 10px 0;
+            }
+            
+            .tab-item {
+                padding: 10px 15px;
+                white-space: nowrap;
+            }
+            
+            .tab-item.active::before {
+                width: 100%;
+                height: 3px;
+                top: auto;
+                bottom: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content-panel {
+                padding: 20px;
+            }
+            
+            .panel-header h2 {
                 font-size: 1.5rem;
             }
             
@@ -350,6 +541,10 @@
             .spoof-desc {
                 font-size: 0.78rem;
             }
+            
+            .hardware-item {
+                padding: 12px;
+            }
         }
     </style>
 </head>
@@ -366,124 +561,258 @@
         <li></li>
     </ul>
     
-    <div class="panel">
-        <div class="panel-header">
-            <h1>Cryptic HWID Spoofer</h1>
-            <p>Advanced hardware identity protection</p>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand-header">
+            <h1>Cryptic</h1>
+            <p>HWID Spoofer</p>
         </div>
         
-        <div class="seed-info">
-            <div class="seed-label">Current Seed:</div>
-            <div class="seed-value" id="current-seed">8644627515970950</div>
+        <div class="tabs">
+            <a href="#" class="tab-item active" data-tab="spoof-panel">
+                <i class="fas fa-user-secret"></i>
+                <span>Spoof Panel</span>
+            </a>
+            <a href="#" class="tab-item" data-tab="serial-checker">
+                <i class="fas fa-fingerprint"></i>
+                <span>Serial Checker</span>
+            </a>
         </div>
         
-        <div class="spoof-options">
-            <div class="spoof-item" data-option="disk">
-                <div class="control-group">
-                    <div class="spoof-checkbox"></div>
-                    <div class="option-icon">
+        <div class="sidebar-footer">
+            v1.0 | Professional Security Tool
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Spoof Panel -->
+        <div class="content-panel active-panel" id="spoof-panel">
+            <div class="panel-header">
+                <h2>Spoof Control Panel</h2>
+                <p>Protect your hardware identity</p>
+            </div>
+            
+            <div class="seed-info">
+                <div class="seed-label">Current Seed:</div>
+                <div class="seed-value" id="current-seed">8644627515970950</div>
+            </div>
+            
+            <div class="spoof-options">
+                <div class="spoof-item" data-option="disk">
+                    <div class="control-group">
+                        <div class="spoof-checkbox"></div>
+                        <div class="option-icon">
+                            <i class="fas fa-hdd"></i>
+                        </div>
+                    </div>
+                    <div class="spoof-text">
+                        <span class="spoof-label">Disk Spoofing</span>
+                        <span class="spoof-desc">Changes disk serial numbers and identifiers</span>
+                    </div>
+                </div>
+                <div class="spoof-item" data-option="smbios">
+                    <div class="control-group">
+                        <div class="spoof-checkbox"></div>
+                        <div class="option-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                    </div>
+                    <div class="spoof-text">
+                        <span class="spoof-label">SMBIOS Spoofing</span>
+                        <span class="spoof-desc">Modifies system BIOS information</span>
+                    </div>
+                </div>
+                <div class="spoof-item" data-option="network">
+                    <div class="control-group">
+                        <div class="spoof-checkbox checked"></div>
+                        <div class="option-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                    </div>
+                    <div class="spoof-text">
+                        <span class="spoof-label">Network Spoofing</span>
+                        <span class="spoof-desc">Changes MAC address and network identifiers</span>
+                        <span class="spoof-tag">Ethernet Only</span>
+                    </div>
+                </div>
+                <div class="spoof-item" data-option="uefi">
+                    <div class="control-group">
+                        <div class="spoof-checkbox"></div>
+                        <div class="option-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                    </div>
+                    <div class="spoof-text">
+                        <span class="spoof-label">UEFI Spoofing</span>
+                        <span class="spoof-desc">Modifies UEFI firmware identifiers</span>
+                    </div>
+                </div>
+                <div class="spoof-item" data-option="usb">
+                    <div class="control-group">
+                        <div class="spoof-checkbox checked"></div>
+                        <div class="option-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                    </div>
+                    <div class="spoof-text">
+                        <span class="spoof-label">USB Spoofing</span>
+                        <span class="spoof-desc">Changes USB device IDs and serials</span>
+                    </div>
+                </div>
+                <div class="spoof-item" data-option="gpu">
+                    <div class="control-group">
+                        <div class="spoof-checkbox"></div>
+                        <div class="option-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                    </div>
+                    <div class="spoof-text">
+                        <span class="spoof-label">GPU Spoofing</span>
+                        <span class="spoof-desc">Modifies GPU identifiers and device IDs</span>
+                        <span class="spoof-tag">NVIDIA ONLY</span>
+                    </div>
+                </div>
+                <div class="spoof-item" data-option="monitor">
+                    <div class="control-group">
+                        <div class="spoof-checkbox"></div>
+                        <div class="option-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                    </div>
+                    <div class="spoof-text">
+                        <span class="spoof-label">Monitor Spoofing</span>
+                        <span class="spoof-desc">Changes monitor EDID information</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-button" id="generate-seed">
+                    <i class="fas fa-random"></i>
+                    Generate New Seed
+                </button>
+                <button class="action-button" id="load-spoofer">
+                    <i class="fas fa-shield-alt"></i>
+                    Activate Spoofer
+                </button>
+            </div>
+        </div>
+        
+        <!-- Serial Checker -->
+        <div class="content-panel" id="serial-checker">
+            <div class="panel-header">
+                <h2>Hardware Serial Checker</h2>
+                <p>Current system hardware identifiers</p>
+            </div>
+            
+            <div class="serial-checker">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="hardware-info">
+                        <div class="hardware-name">Processor</div>
+                        <div class="hardware-serial">BFEBFBFF000906EA</div>
+                    </div>
+                </div>
+                
+                <div class="hardware-item">
+                    <div class="hardware-icon">
                         <i class="fas fa-hdd"></i>
                     </div>
-                </div>
-                <div class="spoof-text">
-                    <span class="spoof-label">Disk Spoofing</span>
-                    <span class="spoof-desc">Changes disk serial numbers and identifiers</span>
-                </div>
-            </div>
-            <div class="spoof-item" data-option="smbios">
-                <div class="control-group">
-                    <div class="spoof-checkbox"></div>
-                    <div class="option-icon">
-                        <i class="fas fa-microchip"></i>
+                    <div class="hardware-info">
+                        <div class="hardware-name">System Drive</div>
+                        <div class="hardware-serial">WD-WX32A1234567</div>
                     </div>
                 </div>
-                <div class="spoof-text">
-                    <span class="spoof-label">SMBIOS Spoofing</span>
-                    <span class="spoof-desc">Modifies system BIOS information</span>
-                </div>
-            </div>
-            <div class="spoof-item" data-option="network">
-                <div class="control-group">
-                    <div class="spoof-checkbox checked"></div>
-                    <div class="option-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                </div>
-                <div class="spoof-text">
-                    <span class="spoof-label">Network Spoofing</span>
-                    <span class="spoof-desc">Changes MAC address and network identifiers</span>
-                    <span class="spoof-tag">Ethernet Only</span>
-                </div>
-            </div>
-            <div class="spoof-item" data-option="uefi">
-                <div class="control-group">
-                    <div class="spoof-checkbox"></div>
-                    <div class="option-icon">
-                        <i class="fas fa-microchip"></i>
-                    </div>
-                </div>
-                <div class="spoof-text">
-                    <span class="spoof-label">UEFI Spoofing</span>
-                    <span class="spoof-desc">Modifies UEFI firmware identifiers</span>
-                </div>
-            </div>
-            <div class="spoof-item" data-option="usb">
-                <div class="control-group">
-                    <div class="spoof-checkbox checked"></div>
-                    <div class="option-icon">
-                        <i class="fas fa-plug"></i>
-                    </div>
-                </div>
-                <div class="spoof-text">
-                    <span class="spoof-label">USB Spoofing</span>
-                    <span class="spoof-desc">Changes USB device IDs and serials</span>
-                </div>
-            </div>
-            <div class="spoof-item" data-option="gpu">
-                <div class="control-group">
-                    <div class="spoof-checkbox"></div>
-                    <div class="option-icon">
+                
+                <div class="hardware-item">
+                    <div class="hardware-icon">
                         <i class="fas fa-gamepad"></i>
                     </div>
-                </div>
-                <div class="spoof-text">
-                    <span class="spoof-label">GPU Spoofing</span>
-                    <span class="spoof-desc">Modifies GPU identifiers and device IDs</span>
-                    <span class="spoof-tag">NVIDIA ONLY</span>
-                </div>
-            </div>
-            <div class="spoof-item" data-option="monitor">
-                <div class="control-group">
-                    <div class="spoof-checkbox"></div>
-                    <div class="option-icon">
-                        <i class="fas fa-desktop"></i>
+                    <div class="hardware-info">
+                        <div class="hardware-name">Graphics Card</div>
+                        <div class="hardware-serial">NVIDIA-10DE-2484-00000000</div>
                     </div>
                 </div>
-                <div class="spoof-text">
-                    <span class="spoof-label">Monitor Spoofing</span>
-                    <span class="spoof-desc">Changes monitor EDID information</span>
+                
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="hardware-info">
+                        <div class="hardware-name">Network Adapter</div>
+                        <div class="hardware-serial">00:1A:2B:3C:4D:5E</div>
+                    </div>
+                </div>
+                
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <div class="hardware-info">
+                        <div class="hardware-name">Motherboard</div>
+                        <div class="hardware-serial">MB-1234567890</div>
+                    </div>
+                </div>
+                
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="hardware-info">
+                        <div class="hardware-name">Monitor</div>
+                        <div class="hardware-serial">DELA0A123456789</div>
+                    </div>
+                </div>
+                
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-barcode"></i>
+                    </div>
+                    <div class="hardware-info">
+                        <div class="hardware-name">BIOS</div>
+                        <div class="hardware-serial">AMI-1234567890</div>
+                    </div>
+                </div>
+                
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-usb"></i>
+                    </div>
+                    <div class="hardware-info">
+                        <div class="hardware-name">USB Controller</div>
+                        <div class="hardware-serial">USB-8086-1E31</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="action-buttons">
-            <button class="action-button" id="generate-seed">
-                <i class="fas fa-random"></i>
-                Generate New Seed
-            </button>
-            <button class="action-button" id="load-spoofer">
-                <i class="fas fa-shield-alt"></i>
-                Activate Spoofer
-            </button>
-        </div>
-        
-        <div class="panel-footer">
-            Cryptic HWID Spoofer v1.0 | Professional Security Tool
         </div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('.tab-item');
+            const panels = document.querySelectorAll('.content-panel');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active classes
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active-panel'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding panel
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active-panel');
+                });
+            });
+            
             // Toggle spoof options on click
             document.querySelectorAll('.spoof-item').forEach(item => {
                 item.addEventListener('click', function() {
